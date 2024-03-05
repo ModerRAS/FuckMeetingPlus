@@ -47,7 +47,7 @@ jobs:
           $xmldata.Save($content)
           echo $env:BUILD_VERSION
           msbuild FuckMeetingPlus /t:DoPublish /p:Configuration=Release /p:PublishProfile=ClickOnceProfile
-          Copy-Item "FuckMeetingPlus/bin/Release/net6.0-windows/win-x64/app.publish/Publish.html" "FuckMeetingPlus/bin/FuckMeetingPlus/"
+          Copy-Item "FuckMeetingPlus/bin/Release/net6.0-windows/app.publish/Publish.html" "FuckMeetingPlus/bin/FuckMeetingPlus/"
     - name: Upload to ClickOnce Server
       shell: pwsh
       env:
