@@ -6,6 +6,10 @@ using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using FuckMeetingPlus.Utils;
 using Timer = System.Timers.Timer;
+using Microsoft.Extensions.Hosting;
+using Coravel;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace FuckMeetingPlus;
 
@@ -18,7 +22,7 @@ public class MainViewModel : ObservableObject
     private string _missionText;
     private string _currentTime;
     private Timer _myTimer;
-
+    private bool _isStart { get; set; }
     public string Time
     {
         get => _time;
@@ -56,7 +60,7 @@ public class MainViewModel : ObservableObject
 
     private void StartFishTouching()
     {
-        _myTimer.Start();
+        _isStart = true;
         MissionText = "开始任务";
     }
 
@@ -74,68 +78,79 @@ public class MainViewModel : ObservableObject
         StartCommand = new RelayCommand(StartFishTouching);
     }
 
-    /// <summary>
-    /// 主逻辑函数，参数无用，仅用来匹配委托
-    /// </summary>
-    private void MainLogic(object sender, EventArgs e)
-    {
-        _currentTime = DateTime.Now.ToString("MM/dd/HH/mm");
-
-        if (_currentTime == Time)
-        {
-            // try
-            // {
-            //     Process.Start(Path);
-            // }
-            // catch (Exception exception)
-            // {
-            //     Console.WriteLine(exception);
-            //     throw;
-            // }
-            //
-            // Thread.Sleep(Convert.ToInt32(Waiting) * 1000);
-            //
-            // var intX1 = Convert.ToInt32(X1);
-            // var intY1 = Convert.ToInt32(Y1);
-            // NativeMethod.LeftMouseClick(intX1, intY1);
-            // Thread.Sleep(500);
-            //
-            // NativeMethod.KeyInput(MeetingId);
-            // Thread.Sleep(500);
-            //
-            // var intX2 = Convert.ToInt32(X2);
-            // var intY2 = Convert.ToInt32(Y2);
-            // NativeMethod.LeftMouseClick(intX2, intY2);
-
-            if (MissionText == "任务完成")
-            {
-                MissionText = "开始任务";
-            }
-
-            try
-            {
-                Cmd.RunCommand($"start wemeet://page/inmeeting?meeting_code={MeetingId}");
-                MissionText = "任务完成";
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception);
-                throw;
-            }
-
-            _myTimer.Enabled = false;
-            _myTimer.Stop();
-        }
-    }
-
+    public static IHostBuilder CreateHostBuilder() =>
+            Host.CreateDefaultBuilder()
+                .ConfigureServices(services => {
+                    services.AddScheduler();
+                }).ConfigureLogging(logging => {
+                    logging.ClearProviders();
+                    logging.AddSimpleConsole(options => {
+                        options.IncludeScopes = true;
+                        options.SingleLine = true;
+                        options.TimestampFormat = "[yyyy/MM/dd HH:mm:ss] ";
+                    });
+                });
     /// <summary>
     /// 初始化Timer
     /// </summary>
     private void InitializeTimer()
     {
-        _myTimer = new Timer();
-        _myTimer.Interval = 30000; //注意间隔时间为30秒
-        _myTimer.Enabled = false;
-        _myTimer.Elapsed += MainLogic;
+        IHost host = CreateHostBuilder().Build();
+        host.Services.UseScheduler(scheduler => {
+            // Easy peasy 👇
+            scheduler
+                .Schedule(() => {
+                    if (!_isStart) {
+                        return;
+                    }
+                    var currentTime = DateTime.Now;
+                    if (string.IsNullOrEmpty(Time)) {
+                        return;
+                    }
+                    var setTime = DateTime.ParseExact(Time, "yyyy/MM/dd/HH/mm", null);
+                    if (currentTime < setTime) {
+                        return;
+                    }
+                    // try
+                    // {
+                    //     Process.Start(Path);
+                    // }
+                    // catch (Exception exception)
+                    // {
+                    //     Console.WriteLine(exception);
+                    //     throw;
+                    // }
+                    //
+                    // Thread.Sleep(Convert.ToInt32(Waiting) * 1000);
+                    //
+                    // var intX1 = Convert.ToInt32(X1);
+                    // var intY1 = Convert.ToInt32(Y1);
+                    // NativeMethod.LeftMouseClick(intX1, intY1);
+                    // Thread.Sleep(500);
+                    //
+                    // NativeMethod.KeyInput(MeetingId);
+                    // Thread.Sleep(500);
+                    //
+                    // var intX2 = Convert.ToInt32(X2);
+                    // var intY2 = Convert.ToInt32(Y2);
+                    // NativeMethod.LeftMouseClick(intX2, intY2);
+
+                    if (MissionText == "任务完成") {
+                        MissionText = "开始任务";
+                    }
+
+                    try {
+                        Cmd.RunCommand($"start wemeet://page/inmeeting?meeting_code={MeetingId}");
+                        MissionText = "任务完成";
+                    } catch (Exception exception) {
+                        Console.WriteLine(exception);
+                        throw;
+                    }
+                    _isStart = false;
+
+                })
+                .EveryFifteenSeconds();
+        });
+        host.RunAsync();
     }
 }

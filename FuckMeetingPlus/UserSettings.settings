@@ -6,7 +6,7 @@
       <Value Profile="(Default)">E:\Tencent Room\WeMeet\wemeetapp.exe</Value>
     </Setting>
     <Setting Name="Time" Type="System.String" Scope="User">
-      <Value Profile="(Default)">05/15/17/05</Value>
+      <Value Profile="(Default)">2024/05/15/17/05</Value>
     </Setting>
     <Setting Name="MeetingId" Type="System.String" Scope="User">
       <Value Profile="(Default)">114514</Value>
