@@ -1,4 +1,3 @@
-## ⚠️停更至 2023 年高考结束
 # FuckMeeting+
 
 FuckMeeting+ 是 [FuckTencentMeeting](https://github.com/Yoroion/FuckTencentMeeting) 的 GUI 重构版，是基于 .NET 6.0 的极简 WPF 应用，用于自动加入腾讯会议，下文简称为 **FM+**
