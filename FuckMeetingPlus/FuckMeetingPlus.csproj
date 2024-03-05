@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net8.0-windows</TargetFramework>
-		<PublishSingleFile>true</PublishSingleFile>
+		<RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
 		<PublishReadyToRun>true</PublishReadyToRun>
 		<Nullable>enable</Nullable>
 		<UseWPF>true</UseWPF>
