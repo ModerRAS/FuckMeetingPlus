@@ -20,6 +20,10 @@
 		<PackageReference Include="H.InputSimulator" Version="1.2.6" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
+		<PackageReference Include="MSBuildTasks" Version="1.5.0.235">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="WPF-UI" Version="1.2.7" />
 	</ItemGroup>
 
