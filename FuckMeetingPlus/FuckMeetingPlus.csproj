@@ -24,11 +24,9 @@
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+		<PackageReference Include="OpenCvSharp4" Version="4.9.0.20240103" />
+		<PackageReference Include="OpenCvSharp4.runtime.win" Version="4.9.0.20240103" />
 		<PackageReference Include="WPF-UI" Version="1.2.7" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  	<Folder Include="Utils\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -40,6 +38,21 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  	<None Update="Assets\AutoConnectedToAudio.png">
+	  	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  	</None>
+	  	<None Update="Assets\FullScreen.png">
+	  	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  	</None>
+	  	<None Update="Assets\IKnow.png">
+	  	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  	</None>
+	  	<None Update="Assets\JoinMeeting.png">
+	  	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  	</None>
+	  	<None Update="Assets\PleaseTypePassword.png">
+	  	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  	</None>
 	  	<None Update="Publish.html">
 	  	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  	</None>

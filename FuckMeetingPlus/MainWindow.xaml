@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         xmlns:wpfui="http://schemas.lepo.co/wpfui/2022/xaml"
         Style="{StaticResource UiWindow}"
-        Title="MainWindow" Height="100" Width="300"
+        Title="MainWindow" Height="200" Width="300"
         WindowStartupLocation="CenterScreen">
 
     <Grid>
@@ -23,8 +23,12 @@
                     <TextBlock Text="会议号" Margin="0,0,0,8" />
                     <wpfui:NumberBox Text="{Binding MeetingId, Mode=TwoWay}" />
                 </StackPanel>
+                <StackPanel Margin="0,8,0,0">
+                    <TextBlock Text="会议密码" Margin="0,0,0,8" />
+                    <TextBox Text="{Binding Password, Mode=TwoWay}" />
+                </StackPanel>
 
-                <StackPanel Margin="0,16,0,0">
+                <StackPanel Margin="0,8,0,0">
                     <TextBlock Text="会议开始时间 (年/月/日/时/分)" Margin="0,0,0,8" />
                     <TextBox Text="{Binding Time, Mode=TwoWay}" />
                 </StackPanel>
@@ -49,7 +53,7 @@
                     </Grid.ColumnDefinitions>
 
                     <wpfui:Hyperlink Content="关于软件" Grid.Column="0"
-                                     NavigateUri="https://github.com/Yoroion/FuckMeetingPlus" />
+                                     NavigateUri="https://github.com/ModerRAS/FuckMeetingPlus" />
                     <TextBlock Text="{Binding MissionText}" Grid.Column="2" VerticalAlignment="Center" />
                 </Grid>
             </StackPanel>

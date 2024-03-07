@@ -28,6 +28,7 @@ public class MainViewModel : ObservableObject
         get => _time;
         set => SetProperty(ref _time, value);
     }
+    public string Password { get; set; }
 
 
     public string MeetingId
@@ -111,6 +112,7 @@ public class MainViewModel : ObservableObject
                     if (currentTime < setTime) {
                         return;
                     }
+                    _isStart = false;
                     // try
                     // {
                     //     Process.Start(Path);
@@ -140,13 +142,17 @@ public class MainViewModel : ObservableObject
                     }
 
                     try {
-                        Cmd.RunCommand($"start wemeet://page/inmeeting?meeting_code={MeetingId}");
+                        if (string.IsNullOrEmpty(Password)) {
+                            TencentMeetingUtil.JoinMeeting(MeetingId);
+                        } else {
+                            TencentMeetingUtil.JoinMeeting(MeetingId, Password);
+                        }
                         MissionText = "任务完成";
                     } catch (Exception exception) {
                         Console.WriteLine(exception);
                         throw;
                     }
-                    _isStart = false;
+                    //_isStart = false;
 
                 })
                 .EveryFifteenSeconds();
