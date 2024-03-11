@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Wpf.Ui.Appearance;
 
 
 namespace FuckMeetingPlus
@@ -21,18 +22,10 @@ namespace FuckMeetingPlus
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
-        {
-            InitializeComponent();
+        public MainWindow() {
+            SystemThemeWatcher.Watch(this);
 
-            Loaded += (_, _) =>
-            {
-                WPFUI.Appearance.Watcher.Watch(
-                    this, // Window class
-                    WPFUI.Appearance.BackgroundType.Mica, // Background type
-                    true // Whether to change accents automatically
-                );
-            };
+            InitializeComponent();
         }
     }
 }

@@ -2,14 +2,16 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Input;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
 using FuckMeetingPlus.Utils;
 using Timer = System.Timers.Timer;
 using Microsoft.Extensions.Hosting;
 using Coravel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using System.Threading.Tasks;
+using System.IO;
 
 namespace FuckMeetingPlus;
 
@@ -29,6 +31,7 @@ public class MainViewModel : ObservableObject
         set => SetProperty(ref _time, value);
     }
     public string Password { get; set; }
+    public string ObsPath { get; set; }
 
 
     public string MeetingId
@@ -147,6 +150,11 @@ public class MainViewModel : ObservableObject
                         } else {
                             TencentMeetingUtil.JoinMeeting(MeetingId, Password);
                         }
+                        Task.Delay(5000).Wait();
+                        if (!string.IsNullOrWhiteSpace(ObsPath)) {
+                            Cmd.RunCommand($"start /d \"{Path.GetDirectoryName(ObsPath)}\" \"\" {Path.GetFileName(ObsPath)} --startrecording");
+                        }
+                        //Process.Start(ObsPath, "--startrecording");
                         MissionText = "任务完成";
                     } catch (Exception exception) {
                         Console.WriteLine(exception);
