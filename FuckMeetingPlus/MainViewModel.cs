@@ -24,6 +24,7 @@ public class MainViewModel : ObservableObject
     private string _missionText;
     private string _currentTime;
     private Timer _myTimer;
+    private string _obsPath;
     private bool _isStart { get; set; }
     public string Time
     {
@@ -31,7 +32,7 @@ public class MainViewModel : ObservableObject
         set => SetProperty(ref _time, value);
     }
     public string Password { get; set; }
-    public string ObsPath { get; set; }
+    public string ObsPath { get => _obsPath; set => SetProperty(ref _obsPath, value); }
 
 
     public string MeetingId
@@ -56,6 +57,7 @@ public class MainViewModel : ObservableObject
     {
         UserSettings.Default.MeetingId = MeetingId;
         UserSettings.Default.Time = Time;
+        UserSettings.Default.ObsPath = ObsPath;
 
         UserSettings.Default.Save();
     }
@@ -74,6 +76,7 @@ public class MainViewModel : ObservableObject
     {
         Time = UserSettings.Default.Time;
         MeetingId = UserSettings.Default.MeetingId;
+        ObsPath = UserSettings.Default.ObsPath;
         MissionText = "准备就绪";
 
         InitializeTimer();

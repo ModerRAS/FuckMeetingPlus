@@ -26,5 +26,8 @@
     <Setting Name="Waiting" Type="System.String" Scope="User">
       <Value Profile="(Default)">5</Value>
     </Setting>
+    <Setting Name="ObsPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Program Files\obs-studio\30.0.2\bin\64bit\obs64.exe</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
